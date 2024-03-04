@@ -15,3 +15,16 @@ export async function getUserById(req: any, res: any) {
     res.status(404).json({ message: "User not found" });
   }
 }
+
+export async function addUser(req, res) {
+  const user = req.body;
+
+  try {
+    await User.create(user);
+    res
+      .status(201)
+      .json({ message: "Successfully added a new user!", data: user });
+  } catch {
+    res.status(500).json({ message: "User not found" });
+  }
+}
