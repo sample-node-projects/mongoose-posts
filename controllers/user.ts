@@ -32,11 +32,23 @@ export async function addUser(
   const userRequest = req.body;
 
   try {
-    await User.create(user);
-    res
-      .status(201)
-      .json({ message: "Successfully added a new user!", data: user });
-  } catch {
+    let userObj = await User.findOne({ email: userRequest.email }).exec();
+    console.log(userObj);
+    if (!userObj) {
+      userObj = await User.create(userRequest);
+      res.status(201).json({
+        message: "Successfully added a new user!",
+        data: {
+          _id: userObj._id,
+          name: userObj.name,
+          email: userObj.email,
+        } as IUser,
+      });
+    } else {
+      res.status(500).json({ message: "User already exists" });
+    }
+  } catch (err) {
+    console.log(err);
     res.status(500).json({ message: "User not found" });
   }
 }
