@@ -18,8 +18,17 @@ export async function addPost(
   });
 }
 
-function getPostByID() {
+export async function getPostByID(
+  req: Request<{ id: string }>,
+  res: Response<HttpResponse<IPost | null>>
+) {
+  const post = await Post.find({ _id: req.params.id, userId: req.body.userId })
+    .populate("userId", "-__v")
+    .select("-__v");
 
+  if (post) {
+    res.json({ message: "Found post!", data: post as unknown as IPost });
+  }
 }
 
 function getPosts() {
