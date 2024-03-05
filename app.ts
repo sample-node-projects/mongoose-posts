@@ -24,7 +24,7 @@ mongoose
     }
   })
   .then(() => {
-    app.listen(3000);
+    app.listen(3333);
   })
   .catch((err) => {
     console.error("Unable to connect to the database", err);
