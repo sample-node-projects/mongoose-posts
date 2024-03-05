@@ -1,7 +1,12 @@
-import { User } from "../model/user";
+import { Request, Response } from "express";
+import { IUser, User } from "../model/user";
+import { HttpResponse } from "../types/http-response";
 
-export async function getAllUsers(req: any, res: any) {
-  const users = await User.find().exec();
+export async function getAllUsers(
+  req: Request,
+  res: Response<HttpResponse<IUser[]>>
+) {
+  const users = await User.find().select("-__v").exec();
   res.json({ message: "Successfully fetched users", data: users });
 }
 
