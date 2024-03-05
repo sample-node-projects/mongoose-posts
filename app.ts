@@ -3,6 +3,7 @@ import express from "express";
 import mongoose from "mongoose";
 import { User } from "./model/user";
 import { userRouter } from "./route/user";
+import { postRouter } from "./route/post";
 
 const app = express();
 
@@ -11,8 +12,8 @@ let user;
 app.use(bodyParser.json());
 
 app.use("/users", userRouter);
+app.use("/posts", postRouter);
 
-app.listen(3000);
 mongoose
   .connect(
     "mongodb+srv://malhotrasaksham:8hiICmjloNiGsWxO@cluster0.tcgrofx.mongodb.net/posts?retryWrites=true&w=majority"
