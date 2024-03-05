@@ -31,6 +31,12 @@ export async function getPostByID(
   }
 }
 
-function getPosts() {
-    
+export async function getPosts(
+  req: Request<{}, {}, IPost & { userId: string }>,
+  res: Response<HttpResponse<IPost[] | null>>
+) {
+  const posts = await Post.find({ userId: req.body.userId })
+    .populate("userId", "-__v")
+    .select("-__v");
+  res.json({ message: "Got posts!", data: posts });
 }
