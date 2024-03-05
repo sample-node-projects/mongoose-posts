@@ -25,8 +25,11 @@ export async function getUserById(
   }
 }
 
-export async function addUser(req, res) {
-  const user = req.body;
+export async function addUser(
+  req: Request<{}, {}, IUser>,
+  res: Response<HttpResponse<IUser | null>>
+) {
+  const userRequest = req.body;
 
   try {
     await User.create(user);
